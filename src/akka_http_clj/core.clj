@@ -1,15 +1,28 @@
 (ns akka-http-clj.core
-  (:import [akka.stream ActorMaterializer]
-           [akka.actor ActorSystem]))
+  (:import java.util.function.Function
+            io.forward.akka.http.client.Client))
 
-;; TODO maybe do this in Java and pass in the mappings only from CLJ->Request and Response objects?
-
-(defn actor-system
-  "Create a new Akka ActorSystem"
+(defn run-request
+  "Example HTTP request"
   []
-  (ActorSystem/create))
+  (let [client (Client.)
+        request (.buildRequest client)]
+    (.runRequest client request)))
 
-(defn actor-materializer
-  "Construct an actor materializer"
-  [^ActorSystem system]
-  (ActorMaterializer/create system))
+(defn reify-function
+  "Helper to make it easy to map clojure functions to java.util.function.Function"
+  [f]
+  (reify Function
+    (apply [_ v] (f v))))
+
+(defn run-demo
+  []
+  (let [response (run-request)]
+    (.thenApplyAsync response
+      (reify-function (fn [r] (println r))))))
+
+(defn -main []
+  (print "Running request")
+  (run-demo)
+  (shutdown-agents)
+  (println "Done"))

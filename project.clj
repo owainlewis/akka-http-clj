@@ -3,6 +3,7 @@
   :url "http://github.com/owainlewis/akka-http-clj"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :java-source-paths ["src/java"]
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.typesafe.akka/akka-actor_2.11 "2.4.8"]
                  [com.typesafe.akka/akka-stream_2.11 "2.4.8"]
