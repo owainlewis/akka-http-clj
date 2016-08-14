@@ -10,6 +10,7 @@
      :uri "http://owainlewis.com"}))
 
 (defn make-request [{:keys [method uri headers body]}]
+  )
 
 (defn run-request
   "Example HTTP request"
