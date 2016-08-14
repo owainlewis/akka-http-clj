@@ -4,7 +4,6 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpMethods;
 import akka.http.javadsl.model.HttpRequest;
-import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 
 import java.util.concurrent.CompletionStage;
@@ -15,16 +14,22 @@ public final class Client {
 
     final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-    // Demo request
     public HttpRequest buildRequest () {
         return HttpRequest.create()
                 .withUri("http://owainlewis.com")
                 .withMethod(HttpMethods.GET);
     }
 
-    public CompletionStage<HttpResponse> runRequest (HttpRequest request) {
+    /**
+     * Run a HTTP request and transform the response to an internal representation
+     *
+     * @param request A HttpRequest to execute
+     * @return An internal (simplified) representation of the response
+     */
+    public CompletionStage<InternalResponse> runRequest (HttpRequest request) {
         return Http.get(system)
-                .singleRequest(request, materializer);
+                .singleRequest(request, materializer)
+                .thenApply(ResponseTransformer::transform);
     }
 }
 

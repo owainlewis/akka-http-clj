@@ -7,4 +7,5 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.typesafe.akka/akka-actor_2.11 "2.4.8"]
                  [com.typesafe.akka/akka-stream_2.11 "2.4.8"]
+                 [com.typesafe.akka/akka-http-experimental_2.11 "2.4.8"]
                  [com.typesafe.akka/akka-http-core_2.11 "2.4.8"]])
