@@ -2,11 +2,19 @@
   (:import java.util.function.Function
            io.forward.akka.http.client.Client))
 
+(defrecord HRequest [method uri])
+
+(def request-example
+  (map->HRequest
+    {:method :get
+     :uri "http://owainlewis.com"}))
+
+(defn make-request [{:keys [method uri headers body]}]
+
 (defn run-request
   "Example HTTP request"
-  []
-  (let [client (Client.)
-        request (.buildRequest client)]
+  [request]
+  (let [client (Client.)]
     (.runRequest client request)))
 
 (defn- reify-function
