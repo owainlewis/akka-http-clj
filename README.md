@@ -4,7 +4,14 @@ A Clojure library designed to ... well, that part is up to you.
 
 ## Usage
 
-FIXME
+```clojure
+(ns myns
+  (require [akka-http-clj.client :as http]))
+
+(request {:method :get
+          :uri "http://owainlewis.com"})
+
+```
 
 ## License
 

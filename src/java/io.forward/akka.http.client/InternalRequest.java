@@ -25,15 +25,15 @@ public class InternalRequest {
         return m.orElseThrow(() -> new RuntimeException("Invalid HTTP method " + method));
     }
 
-    public InternalRequest(HttpMethod method, String uri, String body, Map<String, String> headers) {
-        this.method = method;
+    public InternalRequest(String method, String uri, String body, Map<String, String> headers) {
+        this.method = methodFromString(method);
         this.uri = uri;
         this.body = body;
         this.headers = headers;
     }
 
-    public InternalRequest(HttpMethod method, String uri) {
-        this.method = method;
+    public InternalRequest(String method, String uri) {
+        this.method = methodFromString(method);
         this.uri = uri;
         this.body = null;
         this.headers = new HashMap<>();

@@ -1,16 +1,17 @@
 (ns akka-http-clj.core
   (:import java.util.function.Function
-           io.forward.akka.http.client.Client))
+           [io.forward.akka.http.client InternalRequest InternalResponse Client]))
 
-(defrecord HRequest [method uri])
+(defrecord HRequest [method uri headers])
 
 (def request-example
   (map->HRequest
     {:method :get
-     :uri "http://owainlewis.com"}))
+     :uri "http://owainlewis.com"
+     :headers {}}))
 
-(defn make-request [{:keys [method uri headers body]}]
-  )
+(defn map->internalRequest [{:keys [method uri headers]}]
+  (InternalRequest. (name method) uri))
 
 (defn run-request
   "Example HTTP request"
@@ -23,7 +24,7 @@
   [f]
   (reify Function
     (apply [_ v] (f v))))
-
+4
 (defn- fmap
   "Map some function f over a CompletableFuture cf"
   [cf f]
