@@ -1,6 +1,8 @@
 # akka-http-clj
 
-A Clojure library designed to ... well, that part is up to you.
+As a Scala developer I found the Akka HTTP stuff really great to work with (fast, easy and performant).
+
+This is a HTTP client for Clojure that exposes the power of Akka.
 
 ## Usage
 
