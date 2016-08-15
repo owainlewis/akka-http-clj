@@ -2,7 +2,6 @@ package io.forward.akka.http.client;
 
 import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
-import akka.http.javadsl.model.HttpMethods;
 import akka.http.javadsl.model.HttpRequest;
 import akka.stream.ActorMaterializer;
 
@@ -14,12 +13,6 @@ public final class Client {
 
     final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-    public HttpRequest buildRequest () {
-        return HttpRequest.create()
-                .withUri("http://owainlewis.com")
-                .withMethod(HttpMethods.GET);
-    }
-
     /**
      * Run a HTTP request and transform the response to an internal representation
      *
@@ -30,6 +23,14 @@ public final class Client {
         return Http.get(system)
                 .singleRequest(request, materializer)
                 .thenApply(ResponseTransformer::transform);
+    }
+
+    public CompletionStage<InternalResponse> runRequest (InternalRequest request) {
+        HttpRequest req = HttpRequest.create()
+                .withMethod(request.getMethod())
+                .withUri(request.getUri())
+                .addHeaders(request.getIterableHttpHeaders());
+        return runRequest(req);
     }
 }
 

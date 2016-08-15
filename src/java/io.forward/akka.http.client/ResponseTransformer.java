@@ -16,7 +16,6 @@ public final class ResponseTransformer {
     }
 
     public static InternalResponse transform(HttpResponse response) {
-
         int statusCode = response.status().intValue();
 
         Map<String, String> headers = extractResponseHeaders(response.getHeaders());

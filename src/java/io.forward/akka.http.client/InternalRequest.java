@@ -1,11 +1,14 @@
 package io.forward.akka.http.client;
 
+import akka.http.javadsl.model.HttpHeader;
 import akka.http.javadsl.model.HttpMethod;
 import akka.http.javadsl.model.HttpMethods;
+import akka.http.javadsl.model.headers.RawHeader;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class InternalRequest {
 
@@ -19,11 +22,7 @@ public class InternalRequest {
 
     public static HttpMethod methodFromString(String method) {
         Optional<HttpMethod> m = HttpMethods.lookup(method.toUpperCase());
-        if (m.isPresent()) {
-            return m.get();
-        } else {
-            throw new RuntimeException("Invalid HTTP method " + method);
-        }
+        return m.orElseThrow(() -> new RuntimeException("Invalid HTTP method " + method));
     }
 
     public InternalRequest(HttpMethod method, String uri, String body, Map<String, String> headers) {
@@ -46,6 +45,17 @@ public class InternalRequest {
 
     public Map<String, String> getHeaders () {
         return headers;
+    }
+
+    /**
+     * Returns an iterable that can be passed to a Akka request constructor
+     *
+     * @return An iterable of HttpHeaders
+     */
+    public Iterable<HttpHeader> getIterableHttpHeaders () {
+        return headers.entrySet().stream().map((e) -> {
+            return RawHeader.create(e.getKey(), e.getValue());
+        }).collect(Collectors.toSet());
     }
 
     public String getUri () {
