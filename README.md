@@ -1,6 +1,7 @@
 # akka-http-clj
 
-Akka HTTP is a fast, reliable HTTP client from the Scala world. It uses reactive streams to implement TCP backpressure.
+Akka HTTP is a fast, reliable and asynchronous HTTP client from the Scala world. 
+It uses [reactive streams](http://www.reactive-streams.org/) to implement TCP backpressure.
 
 This library implements a Clojure interface for using Akka HTTP (along with the powerful of Reactive Streams) that closely
 mimics existing Clojure HTTP clients.
