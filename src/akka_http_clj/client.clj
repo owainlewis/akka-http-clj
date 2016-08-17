@@ -12,8 +12,13 @@
   "Given a request valid request map will return an internal request to be
    dispatched"
   [{:keys [method uri headers body]}]
-  ;; TODO header transformer
-  (InternalRequest. (name method) uri (java.util.HashMap. headers) body))
+  (let [req-method (name method)
+        req-headers (java.util.HashMap. headers)]
+  (InternalRequest. 
+    req-method 
+    uri 
+    req-headers 
+    body))
 
 (defn- fmap
   "Map some function f over a CompletableFuture cf"
@@ -21,8 +26,6 @@
   (.thenApplyAsync cf
     (reify Function
       (apply [_ v] (f v)))))
-
-(defn- response-time-ms [start])
 
 (defn request
   "Given a HTTP request, it will dispatch the request and return a response as a Clojure map.
@@ -37,4 +40,4 @@
             (with-meta
               { :status (.getStatusCode future-response)
                 :headers (into {} (.getHeaders future-response)) }
-              {:repsonse-time (/ (double (- (. System (nanoTime)) start-time)) 1000000.0)})))))
+              {:response-time (/ (double (- (. System (nanoTime)) start-time)) 1000000.0)})))))
