@@ -1,8 +1,9 @@
 # akka-http-clj
 
-As a Scala developer I found the Akka HTTP stuff really great to work with (fast, easy and performant).
+Akka HTTP is a fast, reliable HTTP client from the Scala world. It uses reactive streams to implement TCP backpressure.
 
-This is a HTTP client for Clojure that exposes the power of Akka.
+This library implements a Clojure interface for using Akka HTTP (along with the powerful of Reactive Streams) that closely
+mimics existing Clojure HTTP clients.
 
 ## Usage
 
@@ -10,14 +11,20 @@ This is a HTTP client for Clojure that exposes the power of Akka.
 (ns myns
   (require [akka-http-clj.client :as http]))
 
-(request {:method :get
-          :uri "http://owainlewis.com"})
-
+(defn example-request []
+  (let [req {:method :post
+             :uri "http://requestb.in/1mpaovf1"
+             :headers {"X-Foo", "Bar"}
+             :body "Hello World"}
+        response @(request req)]
+  (println response)
+  ;; Meta data contains useful information like repsonse times :)
+  (println (meta response)))
 ```
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © 2016 Owain Lewis
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

@@ -24,7 +24,7 @@
   [f]
   (reify Function
     (apply [_ v] (f v))))
-4
+
 (defn- fmap
   "Map some function f over a CompletableFuture cf"
   [cf f]

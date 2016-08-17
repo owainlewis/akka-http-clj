@@ -18,25 +18,32 @@ public class InternalRequest {
 
     private final Map<String, String> headers;
 
-    private final String body; // TODO replace string with something better?
+    private final Optional<String> body; // TODO replace string with something better?
 
     public static HttpMethod methodFromString(String method) {
         Optional<HttpMethod> m = HttpMethods.lookup(method.toUpperCase());
         return m.orElseThrow(() -> new RuntimeException("Invalid HTTP method " + method));
     }
 
-    public InternalRequest(String method, String uri, String body, Map<String, String> headers) {
+    public InternalRequest(String method, String uri, Map<String, String> headers, String body) {
         this.method = methodFromString(method);
         this.uri = uri;
-        this.body = body;
         this.headers = headers;
+        this.body = Optional.of(body);
+    }
+
+    public InternalRequest(String method, String uri, Map<String, String> headers) {
+        this.method = methodFromString(method);
+        this.uri = uri;
+        this.headers = headers;
+        this.body = Optional.empty();
     }
 
     public InternalRequest(String method, String uri) {
         this.method = methodFromString(method);
         this.uri = uri;
-        this.body = null;
         this.headers = new HashMap<>();
+        this.body = Optional.empty();
     }
 
     public HttpMethod getMethod () {
@@ -62,7 +69,7 @@ public class InternalRequest {
         return uri;
     }
 
-    public String getBody () {
+    public Optional<String> getBody () {
         return body;
     }
 }
