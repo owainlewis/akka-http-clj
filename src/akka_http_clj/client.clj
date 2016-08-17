@@ -1,5 +1,5 @@
 (ns akka-http-clj.client
-  (:import (io.forward.akka.http.client InternalRequest InternalResponse Client)
+  (:import (io.forward.akka.http.client InternalRequest Client)
            (java.util.function Function)))
 
 (def client
@@ -18,9 +18,9 @@
     req-method 
     uri 
     req-headers 
-    body))
+    body)))
 
-(defn- fmap
+(defn fmap
   "Map some function f over a CompletableFuture cf"
   [cf f]
   (.thenApplyAsync cf
@@ -36,8 +36,9 @@
         start-time (. System (nanoTime))
         response (.run client internal-request)]
     (fmap response
-          (fn [future-response]
-            (with-meta
-              { :status (.getStatusCode future-response)
-                :headers (into {} (.getHeaders future-response)) }
-              {:response-time (/ (double (- (. System (nanoTime)) start-time)) 1000000.0)})))))
+      (fn [future-response]
+        (let [response-meta {:response-time (/ (double (- (. System (nanoTime)) start-time)) 1000000.0)}]
+          (with-meta
+            { :status (.getStatusCode future-response)
+              :headers (into {} (.getHeaders future-response)) }
+            response-meta))))))

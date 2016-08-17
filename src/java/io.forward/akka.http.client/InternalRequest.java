@@ -62,7 +62,7 @@ public class InternalRequest {
     public Iterable<HttpHeader> getIterableHttpHeaders () {
         return headers.entrySet().stream().map((e) -> {
             return RawHeader.create(e.getKey(), e.getValue());
-        }).collect(Collectors.toSet());
+        }).collect(Collectors.toList());
     }
 
     public String getUri () {
