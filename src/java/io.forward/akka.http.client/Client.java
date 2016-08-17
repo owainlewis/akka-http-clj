@@ -14,10 +14,6 @@ public final class Client {
 
     final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-    public String check () {
-        return "OK";
-    }
-
     /**
      * Run a HTTP request and transform the response to an internal representation
      *
