@@ -40,5 +40,6 @@
         (let [response-meta {:response-time (/ (double (- (. System (nanoTime)) start-time)) 1000000.0)}]
           (with-meta
             { :status (.getStatusCode future-response)
+              :body (.getBody future-response)
               :headers (into {} (.getHeaders future-response)) }
             response-meta))))))

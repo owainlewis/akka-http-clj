@@ -8,8 +8,11 @@ public final class InternalResponse {
 
     private final Map<String, String> headers;
 
-    public InternalResponse(int statusCode, Map<String, String> headers) {
+    private final String body;
+
+    public InternalResponse(int statusCode, String body, Map<String, String> headers) {
         this.statusCode = statusCode;
+        this.body = body;
         this.headers = headers;
     }
 
@@ -19,5 +22,9 @@ public final class InternalResponse {
 
     public Map<String, String> getHeaders() {
         return headers;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

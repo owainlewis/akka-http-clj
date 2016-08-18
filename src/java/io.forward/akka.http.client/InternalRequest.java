@@ -60,9 +60,10 @@ public class InternalRequest {
      * @return An iterable of HttpHeaders
      */
     public Iterable<HttpHeader> getIterableHttpHeaders () {
-        return headers.entrySet().stream().map((e) -> {
-            return RawHeader.create(e.getKey(), e.getValue());
-        }).collect(Collectors.toList());
+        return headers.entrySet()
+                .stream()
+                .map((e) -> RawHeader.create(e.getKey(), e.getValue()))
+                .collect(Collectors.toList());
     }
 
     public String getUri () {

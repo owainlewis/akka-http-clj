@@ -23,7 +23,7 @@ public final class Client {
     public CompletionStage<InternalResponse> run (HttpRequest request) {
         return Http.get(system)
                 .singleRequest(request, materializer)
-                .thenApply(ResponseTransformer::transform);
+                .thenCompose((r) -> ResponseTransformer.transform(r, materializer));
     }
 
     public CompletionStage<InternalResponse> run (InternalRequest request) {
