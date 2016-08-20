@@ -17,7 +17,7 @@ mimics existing Clojure HTTP clients.
              :uri "http://requestb.in/1mpaovf1"
              :headers {"X-Foo", "Bar"}
              :body "Hello World"}
-        response @(request req)]
+        response @(http/request req)]
   (println response)
   ;; Meta data contains useful information like repsonse times :)
   (println (meta response)))
