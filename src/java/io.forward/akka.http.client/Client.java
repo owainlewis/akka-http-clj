@@ -29,7 +29,7 @@ public final class Client {
     public CompletionStage<InternalResponse> run (InternalRequest request) {
         HttpRequest req = HttpRequest.create()
                 .withMethod(request.getMethod())
-                .withUri(request.getUri())
+                .withUri(request.getUrl())
                 .addHeaders(request.getIterableHttpHeaders());
         return request
                 .getBody()

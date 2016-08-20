@@ -14,7 +14,7 @@ public class InternalRequest {
 
     private final HttpMethod method;
 
-    private final String uri;
+    private final String url;
 
     private final Map<String, String> headers;
 
@@ -25,23 +25,23 @@ public class InternalRequest {
         return m.orElseThrow(() -> new RuntimeException("Invalid HTTP method " + method));
     }
 
-    public InternalRequest(String method, String uri, Map<String, String> headers, String body) {
+    public InternalRequest(String method, String url, Map<String, String> headers, String body) {
         this.method = methodFromString(method);
-        this.uri = uri;
+        this.url = url;
         this.headers = headers;
         this.body = Optional.of(body);
     }
 
-    public InternalRequest(String method, String uri, Map<String, String> headers) {
+    public InternalRequest(String method, String url, Map<String, String> headers) {
         this.method = methodFromString(method);
-        this.uri = uri;
+        this.url = url;
         this.headers = headers;
         this.body = Optional.empty();
     }
 
-    public InternalRequest(String method, String uri) {
+    public InternalRequest(String method, String url) {
         this.method = methodFromString(method);
-        this.uri = uri;
+        this.url = url;
         this.headers = new HashMap<>();
         this.body = Optional.empty();
     }
@@ -66,8 +66,8 @@ public class InternalRequest {
                 .collect(Collectors.toList());
     }
 
-    public String getUri () {
-        return uri;
+    public String getUrl () {
+        return url;
     }
 
     public Optional<String> getBody () {
