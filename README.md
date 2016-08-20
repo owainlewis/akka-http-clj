@@ -6,6 +6,14 @@ It uses [reactive streams](http://www.reactive-streams.org/) to implement TCP ba
 This library implements a Clojure interface for using Akka HTTP (along with the power of Reactive Streams) that closely
 mimics existing Clojure HTTP clients.
 
+## TODO
+
+- [ ] Request Entities (content types are set different in Akka HTTP)
+- [ ] {:as :json} Set content types
+- [ ] Configuration options for tuning the client
+- [ ] Better docs
+- [ ] Proxy and TLS configurable
+
 ## Usage
 
 ```clojure
