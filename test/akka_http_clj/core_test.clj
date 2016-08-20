@@ -1,20 +1,18 @@
 (ns akka-http-clj.core-test
   (:require [clojure.test :refer :all]
-            [akka-http-clj.client :refer :all]))
+            [akka-http-clj.client :as client]))
 
-(defn run-request []
-  (println "Making request")
-  (let [req {:method :post
-             :uri "http://requestb.in/pw9e33pw"
-             :headers {"X-Foo", "Bar"}
-             :body "Hello World"}
-        response (request req)]
-    (fmap response
-          (fn [r]
-            (println r)))))
+(defonce endpoint "http://requestb.in/ssc154ss")
 
-(deftest request-test
-  (testing "It works"
-    (let [futures (doall (map (fn [_] (run-request)) (range 100)))]
-      (while true
-        ))))
+(deftest get-requests
+  (testing "It should send a HTTP GET request"
+    (let [response @(client/get endpoint {:headers {"X-Test" "simple-get"}})]
+      (is (= 200 (:status response))))))
+
+(deftest post-requests
+  (testing "It should send a HTTP POST request"
+    (let [response @(client/post endpoint
+                                 {:body "Hello, World"
+                                  :headers {"X-Test" "simple-post"}})]
+      (println response)
+      (is (= 200 (:status response))))))

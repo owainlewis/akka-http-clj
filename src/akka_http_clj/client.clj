@@ -70,7 +70,7 @@
   `(defn ~method
      ~(str "Issues an async HTTP " (clojure.string/upper-case method) " request")
      ~'[url & req]
-     (request (merge {:method :get :url ~'url}
+     (request (merge {:method ~(keyword method) :url ~'url}
                      (into {} ~'req)))))
 
 (defreq get)

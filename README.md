@@ -23,6 +23,30 @@ mimics existing Clojure HTTP clients.
   (println (meta response)))
 ```
 
+## Making Requests
+
+The request API mimics the http-kit and clj-http APIs as closely as possible.
+
+GET request
+
+```clojure
+@(client/get "http://example.com")
+```
+
+GET request with headers
+
+```clojure
+@(client/get "http://example.com" {:headers {"X-Foo" "Bar"}})
+```
+
+POST request
+
+```
+@(client/get "http://example.com"
+    {:body "Hello, World!"
+     :headers {"X-Foo" "Bar"}})
+```
+
 ## License
 
 Copyright © 2016 Owain Lewis
