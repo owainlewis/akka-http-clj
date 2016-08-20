@@ -41,7 +41,7 @@ GET request with headers
 
 POST request
 
-```
+```clojure
 @(client/get "http://example.com"
     {:body "Hello, World!"
      :headers {"X-Foo" "Bar"}})
