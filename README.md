@@ -55,6 +55,17 @@ POST request
      :headers {"X-Foo" "Bar"}})
 ```
 
+## Timing HTTP requests
+
+The response time is automatically available in the response meta
+
+
+```clojure
+(->> @(get "http://github.com/owainlewis")
+                           (meta)
+                           (:response-time))
+```
+
 ## License
 
 Copyright © 2016 Owain Lewis
