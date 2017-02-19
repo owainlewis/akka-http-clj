@@ -25,7 +25,8 @@
   (:refer-clojure :exclude [get])
   (:import (io.forward.akka.http.client InternalRequest Client)
            (java.util.function Function))
-  (:require [clojure.string :as str]))
+  (:require [akka-http-clj.types :refer [HttpRequest HttpResponse]]
+            [clojure.string :as str]))
 
 (def client
   "A single instance of the internal HTTP client.
@@ -51,19 +52,22 @@
       (apply [_ v] (f v)))))
 
 (defn request
-  "Issues an async HTTP request and returns a Java8 CompletableFuture."
+  "Issues an async HTTP request and returns a Future response"
   [req]
   (let [internal-request (map->internalRequest req)
         start-time (. System (nanoTime))
         response (.run client internal-request)]
     (fmap response
       (fn [future-response]
-        (let [response-meta {:response-time (/ (double (- (. System (nanoTime)) start-time)) 1000000.0)}]
+        (let [response-meta
+               {:response-time
+                 (/ (double (- (. System (nanoTime)) start-time)) 1000000.0)}]
           (with-meta
-            { :status (.getStatusCode future-response)
-              :body (.getBody future-response)
-              :headers (into {} (.getHeaders future-response)) }
-            response-meta))))))
+            (let [status (.getStatusCode future-response)
+                  body (.getBody future-response)
+                  hdrs (into {} (.getHeaders future-response))]
+              (HttpResponse. status headers body)
+            response-meta)))))))
 
 (defmacro defreq
   [method]
