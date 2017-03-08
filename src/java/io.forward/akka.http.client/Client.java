@@ -40,19 +40,13 @@ public final class Client {
 
     final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-    /////////////////////////////////////////////////////////////////////////
-    // TODO
-    /////////////////////////////////////////////////////////////////////////
-    // Form data helper
     public RequestEntity formData(Map<String, String> formData) {
         return FormData.create(formData).toEntity();
     }
 
-    // Example of doing a JSON response entity
     public RequestEntity buildEntity (String body) {
         return HttpEntities.create(ContentTypes.APPLICATION_JSON, body);
     }
-    /////////////////////////////////////////////////////////////////////////
 
     /**
      * Run a HTTP request and transform the response to an internal representation
